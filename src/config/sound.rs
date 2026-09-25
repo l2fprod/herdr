@@ -46,6 +46,7 @@ pub struct AgentSoundOverrides {
     pub qwen: AgentSoundSetting,
     pub letta: AgentSoundSetting,
     pub maki: AgentSoundSetting,
+    pub bob: AgentSoundSetting,
     pub muse: AgentSoundSetting,
 }
 
@@ -145,6 +146,7 @@ impl AgentSoundOverrides {
             Some(Agent::Qwen) => self.qwen,
             Some(Agent::Letta) => self.letta,
             Some(Agent::Maki) => self.maki,
+            Some(Agent::Bob) => self.bob,
             Some(Agent::Muse) => self.muse,
             None => AgentSoundSetting::Default,
         }
@@ -187,6 +189,7 @@ impl Default for AgentSoundOverrides {
             qwen: AgentSoundSetting::Default,
             letta: AgentSoundSetting::Default,
             maki: AgentSoundSetting::Default,
+            bob: AgentSoundSetting::Default,
             muse: AgentSoundSetting::Default,
         }
     }

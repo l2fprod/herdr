@@ -64,11 +64,12 @@ pub enum Agent {
     Qwen,
     Letta,
     Maki,
+    Bob,
     Muse,
 }
 
 impl Agent {
-    pub const ALL: [Self; 24] = [
+    pub const ALL: [Self; 25] = [
         Self::Pi,
         Self::Claude,
         Self::Codex,
@@ -92,10 +93,11 @@ impl Agent {
         Self::Qwen,
         Self::Letta,
         Self::Maki,
+        Self::Bob,
         Self::Muse,
     ];
 
-    pub const SCREEN_MANIFEST_AGENTS: [Self; 22] = [
+    pub const SCREEN_MANIFEST_AGENTS: [Self; 23] = [
         Self::Pi,
         Self::Claude,
         Self::Codex,
@@ -117,6 +119,7 @@ impl Agent {
         Self::Qwen,
         Self::Letta,
         Self::Maki,
+        Self::Bob,
         Self::Muse,
     ];
 }
@@ -146,6 +149,7 @@ pub fn agent_label(agent: Agent) -> &'static str {
         Agent::Qwen => "qwen",
         Agent::Letta => "letta",
         Agent::Maki => "maki",
+        Agent::Bob => "bob",
         Agent::Muse => "muse",
     }
 }
@@ -181,6 +185,7 @@ pub fn interactive_agent_executable(agent: Agent) -> &'static str {
         Agent::Qwen => "qwen",
         Agent::Letta => "letta",
         Agent::Maki => "maki",
+        Agent::Bob => "bob",
         Agent::Muse => "muse",
     }
 }
@@ -221,6 +226,7 @@ fn lookup_agent(name: &str) -> Option<Agent> {
         "qwen" | "qwen-code" | "qwen code" => Some(Agent::Qwen),
         "letta" | "letta-code" | "letta code" => Some(Agent::Letta),
         "maki" => Some(Agent::Maki),
+        "bob" | "bobshell" | "bob-shell" => Some(Agent::Bob),
         "muse" | "muse-code" | "muse-cli" => Some(Agent::Muse),
         _ if is_muse_versioned_binary(name) => Some(Agent::Muse),
         _ => None,
@@ -942,6 +948,8 @@ mod tests {
         assert_eq!(identify_agent("letta"), Some(Agent::Letta));
         assert_eq!(identify_agent("Letta Code"), Some(Agent::Letta));
         assert_eq!(identify_agent("maki"), Some(Agent::Maki));
+        assert_eq!(identify_agent("bob"), Some(Agent::Bob));
+        assert_eq!(identify_agent("bobshell"), Some(Agent::Bob));
         assert_eq!(identify_agent("muse"), Some(Agent::Muse));
         assert_eq!(identify_agent("muse-code"), Some(Agent::Muse));
         assert_eq!(identify_agent("muse-cli"), Some(Agent::Muse));
@@ -983,6 +991,9 @@ mod tests {
         assert_eq!(parse_agent_label("letta-code"), Some(Agent::Letta));
         assert_eq!(parse_agent_label("maki"), Some(Agent::Maki));
         assert_eq!(parse_agent_label("kilo-code"), Some(Agent::Kilo));
+        assert_eq!(parse_agent_label("bob"), Some(Agent::Bob));
+        assert_eq!(parse_agent_label("bobshell"), Some(Agent::Bob));
+        assert_eq!(parse_agent_label("bob-shell"), Some(Agent::Bob));
     }
 
     #[test]
@@ -1027,6 +1038,7 @@ mod tests {
             (Agent::Qwen, "qwen"),
             (Agent::Letta, "letta"),
             (Agent::Maki, "maki"),
+            (Agent::Bob, "bob"),
             (Agent::Muse, "muse"),
         ];
         assert_eq!(expected.len(), Agent::ALL.len());
